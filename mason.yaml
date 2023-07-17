@@ -1,0 +1,5 @@
+bricks:
+  model: ^0.7.1
+  feature_brick: ^0.6.2
+  widgetbook_starter: ^0.1.0+2
+  widgetbook_app: ^0.1.0+1

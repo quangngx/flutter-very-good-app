@@ -25,3 +25,14 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+    - assets/
+    - assets/Bold
+    - assets/Cart
+    - assets/Category
+    - assets/Dialog
+    - assets/Line
+    - assets/Product
+    - assets/PromotionOrder
+    - assets/State
+    - assets/SuggestedProduct
