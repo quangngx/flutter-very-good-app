@@ -3,6 +3,27 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_very_good_app/app/logger.dart';
+
+Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+  await runZonedGuarded(
+    () async {
+      //Init logger
+      initLogger();
+
+      // Set the Bloc observer to an instance of AppBlocObserver
+      Bloc.observer = const AppBlocObserver();
+      
+      //Error
+      FlutterError.onError = (details) {
+        log(details.exceptionAsString(), stackTrace: details.stack);
+      };
+
+      runApp(await builder());
+    },
+    (error, stack) => l.error(error.toString(), stack),
+  );
+}
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -18,16 +39,4 @@ class AppBlocObserver extends BlocObserver {
     log('onError(${bloc.runtimeType}, $error, $stackTrace)');
     super.onError(bloc, error, stackTrace);
   }
-}
-
-Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
-  FlutterError.onError = (details) {
-    log(details.exceptionAsString(), stackTrace: details.stack);
-  };
-
-  Bloc.observer = const AppBlocObserver();
-
-  // Add cross-flavor configuration here
-
-  runApp(await builder());
 }
